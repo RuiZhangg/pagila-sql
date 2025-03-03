@@ -3,13 +3,18 @@
  * Use table category, film_category, and film.
  */
 
-CREATE OR REPLACE FUNCTION list_category(TEXT) RETURNS TABLE(title TEXT) AS
+CREATE OR REPLACE FUNCTION list_category(text TEXT) RETURNS TABLE(title TEXT) AS
 $$
 -- FIXME: implementation goes here
+    SELECT title
+    FROM film
+    JOIN film_category USING (film_id)
+    JOIN category USING (category_id)
+    WHERE name = text
+    ORDER BY title;
 $$
 LANGUAGE SQL
-IMMUTABLE
-RETURNS NULL ON NULL INPUT;
+IMMUTABLE;
 
 SELECT list_category('Action');
 SELECT list_category('Animation');
